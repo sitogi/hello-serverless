@@ -7,7 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "source-map-support": "^0.5.10"
+    "aws-sdk": "^2.784.0",
+    "source-map-support": "^0.5.10",
+    "twilio": "^3.50.0"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.17",

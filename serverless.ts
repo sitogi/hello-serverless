@@ -26,6 +26,7 @@ const serverlessConfiguration: Serverless = {
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
     },
+    profile: 'private',
   },
   functions: {
     hello: {
@@ -38,8 +39,45 @@ const serverlessConfiguration: Serverless = {
           }
         }
       ]
+    },
+    updateStatus: {
+      handler: 'handler.updateStatus',
+      events: [
+        {
+          http: {
+            method: 'post',
+            path: 'updateStatus',
+          }
+        }
+      ]
     }
-  }
+  },
+  resources: {
+    Resources: {
+      users: {
+        Type: 'AWS::DynamoDB::Table',
+        Properties: {
+          TableName: 'users',
+          AttributeDefinitions: [
+            {
+              AttributeName: "phone_number",
+              AttributeType: "S",
+            },
+          ],
+          KeySchema: [
+            {
+              AttributeName: "phone_number",
+              KeyType: "HASH",
+            }
+          ],
+          ProvisionedThroughput: {
+            ReadCapacityUnits: 1,
+            WriteCapacityUnits: 1,
+          },
+        }
+      }
+    },
+  },
 }
 
 module.exports = serverlessConfiguration;
